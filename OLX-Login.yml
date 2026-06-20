@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: OLX-login	
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+   console:
+      enabled: true
+      
+  # ✅ FIXED indentation
+
+  security:
+    user:
+      name: admin
+      password: admin
+
+  config:
+    import: "optional:configserver:http://localhost:8888/"
+
+  jpa:
+    hibernate:
+      ddl-auto: update      # ✅ VERY IMPORTANT (creates tables)
+    show-sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always          # ✅ runs schema.sql + data.sql
+
+# ✅ Server config
+server:
+  port: 8089
+
+# ✅ Swagger
+springdoc:
+  show-actuator: true
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# ✅ Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    circuitbreakers:
+      enabled: true
